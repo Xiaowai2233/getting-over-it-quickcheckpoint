@@ -17,7 +17,7 @@ $backup=Join-Path $fixture 'QuickCheckpointMod\Assembly-CSharp.original.dll'
 $firstHash=(Get-FileHash -LiteralPath $backup).Hash
 & (Join-Path $project 'Install.ps1') -GameDirectory $fixture
 if((Get-FileHash -LiteralPath $backup).Hash -ne $firstHash){throw 'Repeated install changed backup'}
-Write-Host 'PASS upgrade/reinstall preserves backup'
+Write-Host 'PASS reinstallation preserves backup'
 $target=Join-Path $managed 'Assembly-CSharp.dll'
 $patchedBytes=[IO.File]::ReadAllBytes($target)
 [IO.File]::AppendAllText($target,'changed-after-install')
@@ -35,4 +35,5 @@ $result=& $tool inspect $target
 if($LASTEXITCODE -ne 0 -or $result -ne 'CLEAN'){throw 'Restored game is not clean'}
 Write-Host 'PASS uninstall restores a game without checkpoint hook'
 @{Settings='PASS';InstallUpgradeUninstall='PASS';ChangedGameProtection='PASS';ExecutedAt=(Get-Date).ToString('o')} | ConvertTo-Json | Set-Content -LiteralPath (Join-Path $TestDirectory 'test-results.json') -Encoding UTF8
+
 
