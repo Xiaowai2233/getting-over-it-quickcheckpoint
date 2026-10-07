@@ -17,7 +17,9 @@ jobs:
           $compiler = Join-Path $env:WINDIR 'Microsoft.NET\Framework64\v4.0.30319\csc.exe'
           $scratch = Join-Path $env:RUNNER_TEMP 'quickcheckpoint-tests'
           New-Item -ItemType Directory -Path $scratch -Force | Out-Null
-          & $compiler /nologo (('/out:') + (Join-Path $scratch 'SettingsTests.exe')) src/CheckpointSettings.cs src/CheckpointLocalization.cs src/CheckpointInputPolicy.cs tests/SettingsTests.cs
+          $sources = @('src\CheckpointSettings.cs', 'src\CheckpointLocalization.cs', 'src\CheckpointInputPolicy.cs', 'tests\SettingsTests.cs') | ForEach-Object { Join-Path $env:GITHUB_WORKSPACE $_ }
+          & $compiler /nologo (('/out:') + (Join-Path $scratch 'SettingsTests.exe')) @sources
           if ($LASTEXITCODE -ne 0) { throw 'Compilation failed' }
           & (Join-Path $scratch 'SettingsTests.exe') $scratch
           if ($LASTEXITCODE -ne 0) { throw 'Tests failed' }
+
