@@ -16,7 +16,7 @@ class SettingsTests {
   string legacy=Path.Combine(args[0],"legacy.xml");
   File.WriteAllText(legacy,"<CheckpointSettings><SaveKey>F7</SaveKey><LoadKey>F8</LoadKey><ConfirmSave>true</ConfirmSave><ShowStatusBar>false</ShowStatusBar><Chinese>true</Chinese></CheckpointSettings>");
   var migrated=CheckpointSettings.Read(legacy,false); migrated.NormalizeLanguage();
-  Check(migrated.Language=="zh-Hans" && !migrated.LanguageChosen && migrated.SaveKey=="F7" && !migrated.ShowStatusBar,"2.0 migration retains settings and asks for language once");
+  Check(migrated.Language=="zh-Hans" && !migrated.LanguageChosen && migrated.SaveKey=="F7" && !migrated.ShowStatusBar,"development configuration retains settings and asks for language once");
   migrated.Language="unsupported"; migrated.LanguageChosen=true; migrated.NormalizeLanguage(); Check(migrated.Language=="en" && !migrated.LanguageChosen,"unsupported language safely returns to selection");
   Check(CheckpointLocalization.Languages.Length==18,"18 supported languages");
   foreach(var language in CheckpointLocalization.Languages) {
@@ -37,3 +37,4 @@ class SettingsTests {
   return 0;
  }
 }
+

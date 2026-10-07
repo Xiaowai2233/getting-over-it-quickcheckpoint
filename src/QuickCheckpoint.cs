@@ -5,7 +5,7 @@ using System.Reflection;
 using System.Xml.Serialization;
 using UnityEngine;
 public class QuickCheckpoint : MonoBehaviour {
- const string Version="2.1.0";
+ const string Version="1.0";
  static QuickCheckpoint instance;
  static readonly BindingFlags Flags=BindingFlags.Instance|BindingFlags.Public|BindingFlags.NonPublic;
  CheckpointSettings settings;
@@ -186,3 +186,4 @@ public class QuickCheckpoint : MonoBehaviour {
   } finally {GUI.skin.font=oldFont;}
  }
 }
+

@@ -43,7 +43,7 @@ try {
  $patchedHash=(Get-FileHash -LiteralPath (Join-Path $stage 'Assembly-CSharp.patched.dll')).Hash
  $modHash=(Get-FileHash -LiteralPath (Join-Path $stage 'QuickCheckpoint.dll')).Hash
  if((Get-FileHash -LiteralPath $target).Hash -ne $patchedHash -or (Get-FileHash -LiteralPath $modTarget).Hash -ne $modHash){throw 'Installed hash verification failed.'}
- $metadata=@{Version='2.1.0';GameDirectory=$game;OriginalHash=(Get-FileHash -LiteralPath $backup).Hash;PatchedHash=$patchedHash;ModHash=$modHash;InstalledAt=(Get-Date).ToString('o')}
+ $metadata=@{Version='1.0';GameDirectory=$game;OriginalHash=(Get-FileHash -LiteralPath $backup).Hash;PatchedHash=$patchedHash;ModHash=$modHash;InstalledAt=(Get-Date).ToString('o')}
  $metadata | ConvertTo-Json | Set-Content -LiteralPath ($manifestPath+'.tmp') -Encoding UTF8
  Move-Item -LiteralPath ($manifestPath+'.tmp') -Destination $manifestPath -Force
 } catch {
@@ -51,7 +51,8 @@ try {
  if($hadMod){Copy-Item -LiteralPath $rollbackMod -Destination $modTarget -Force} elseif(Test-Path -LiteralPath $modTarget){Remove-Item -LiteralPath $modTarget}
  throw
 }
-Write-Host "Installed QuickCheckpoint v2.1.0 into: $game" -ForegroundColor Green
+Write-Host "Installed QuickCheckpoint v1.0 into: $game" -ForegroundColor Green
 Write-Host 'First launch: choose language | F5 twice: Save | F9: Load | F10: Settings'
 Write-Host 'Existing checkpoints kept. Start the game normally.'
+
 

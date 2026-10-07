@@ -6,7 +6,7 @@ public class CheckpointSettings {
  public string LoadKey = "F9";
  public bool ConfirmSave = true;
  public bool ShowStatusBar = true;
- // Retained only to migrate 2.0 configuration files.
+ // Retained only to read configuration files from development test builds.
  public bool Chinese = true;
  public string Language = "";
  public bool LanguageChosen = false;
@@ -29,4 +29,5 @@ public static class AtomicCheckpointFile {
   } finally { if(File.Exists(temp)) File.Delete(temp); }
  }
 }
+
 
